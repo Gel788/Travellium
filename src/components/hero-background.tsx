@@ -18,10 +18,10 @@ export function HeroBackground({ activeTab, className }: HeroBackgroundProps) {
       <AnimatePresence mode="sync">
         <motion.div
           key={activeTab}
-          initial={reduceMotion ? false : { opacity: 0, scale: 1.03 }}
+          initial={reduceMotion ? false : { opacity: 0, scale: 1.04 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={reduceMotion ? undefined : { opacity: 0 }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="absolute inset-0"
         >
           <Image
@@ -30,12 +30,10 @@ export function HeroBackground({ activeTab, className }: HeroBackgroundProps) {
             fill
             priority={activeTab === "flights"}
             sizes="100vw"
-            className="object-cover object-[center_35%] lg:object-[center_30%]"
+            className="object-cover object-[center_28%] lg:object-[65%_center]"
           />
         </motion.div>
       </AnimatePresence>
-
-      {/* Scrim — фото видно, текст и виджет читаемы */}
       <div className="hero-overlay" />
     </div>
   );

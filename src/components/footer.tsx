@@ -53,7 +53,7 @@ export async function Footer() {
             <p className="mt-4 text-sm leading-relaxed text-white/55">{t("tagline")}</p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-10">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-10">
             {columns.map((col) => (
               <div key={col.title}>
                 <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/40">{col.title}</p>

@@ -1,6 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { PageSection } from "@/components/ui/page-section";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export async function CtaBanner() {
   const t = await getTranslations("cta");
@@ -16,7 +18,7 @@ export async function CtaBanner() {
         </p>
         <a
           href="#search"
-          className="mt-6 inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-navy transition-transform hover:scale-[1.02] sm:mt-8 sm:px-8"
+          className={cn(buttonVariants({ variant: "secondary", size: "lg" }), "mt-6 rounded-full bg-white text-navy hover:bg-white/92 sm:mt-8")}
         >
           {t("button")}
           <ArrowRight className="h-4 w-4" aria-hidden strokeWidth={2} />

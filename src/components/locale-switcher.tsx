@@ -10,7 +10,13 @@ const locales: { code: Locale; label: string }[] = [
   { code: "en", label: "EN" },
 ];
 
-export function LocaleSwitcher({ inverted = false }: { inverted?: boolean }) {
+export function LocaleSwitcher({
+  inverted = false,
+  className,
+}: {
+  inverted?: boolean;
+  className?: string;
+}) {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const router = useRouter();
@@ -22,6 +28,7 @@ export function LocaleSwitcher({ inverted = false }: { inverted?: boolean }) {
         inverted
           ? "bg-white/15 ring-1 ring-white/25"
           : "bg-subtle/80 ring-1 ring-border/60",
+        className,
       )}
       role="group"
       aria-label="Language"

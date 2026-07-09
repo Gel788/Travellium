@@ -11,10 +11,10 @@
 
   --tabs-dur: 280ms;
   --tabs-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --tabs-text-muted: #5c6578;
+  --tabs-text-muted: #64748b;
   --tabs-text-active: #ffffff;
-  --tabs-bar-bg: transparent;
-  --tabs-pill-bg: #0b1120;
+  --tabs-bar-bg: #eef2f6;
+  --tabs-pill-bg: #ea580c;
 }
 
 .t-tilt {
@@ -81,7 +81,7 @@
   width: 0;
   background: var(--tabs-pill-bg);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(11, 17, 32, 0.18);
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
   transform: translateX(0);
   transition:
     transform var(--tabs-dur) var(--tabs-ease),
@@ -110,7 +110,7 @@
 }
 
 .t-tab[aria-selected="false"]:hover {
-  color: #0b1120;
+  color: #0f172a;
 }
 
 @media (prefers-reduced-motion: reduce) {

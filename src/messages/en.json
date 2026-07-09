@@ -4,6 +4,8 @@
     "description": "Compare and book flights, trains, buses, and hotels in one place. Simple, fast, reliable."
   },
   "nav": {
+    "search": "Search",
+    "destinations": "Destinations",
     "flights": "Flights",
     "trains": "Trains",
     "buses": "Buses",
@@ -12,7 +14,10 @@
     "about": "About",
     "faq": "FAQ",
     "login": "Log in",
-    "signUp": "Sign up"
+    "signUp": "Sign up",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language"
   },
   "hero": {
     "eyebrow": "Travel without the friction",

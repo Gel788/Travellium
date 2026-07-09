@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { SectionHeader } from "@/components/ui/section-header";
 import { PageSection } from "@/components/ui/page-section";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 
 const partnerKeys = ["aeroflot", "s7", "rzd", "ostrovok", "flixbus", "booking"] as const;
@@ -19,12 +20,9 @@ export async function TrustSection() {
       <ScrollReveal delay={0.05}>
         <div className="scroll-row mt-8 justify-start sm:flex-wrap sm:justify-center sm:gap-3 sm:overflow-visible">
           {partnerKeys.map((key) => (
-            <span
-              key={key}
-              className="rounded-xl border border-border/70 bg-surface px-4 py-2.5 text-xs font-semibold text-muted-foreground sm:text-sm"
-            >
+            <Badge key={key} variant="outline" className="shrink-0 px-4 py-2 text-xs normal-case tracking-normal sm:text-sm">
               {t(`partners.${key}`)}
-            </span>
+            </Badge>
           ))}
         </div>
       </ScrollReveal>

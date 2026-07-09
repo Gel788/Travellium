@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { PageSection } from "@/components/ui/page-section";
+import { Badge } from "@/components/ui/badge";
 import { siteImages } from "@/lib/site-images";
 
 const banners = [
@@ -47,9 +48,9 @@ export async function PromoBanners() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/40 to-navy/10 sm:bg-gradient-to-r sm:from-navy/90 sm:via-navy/55 sm:to-navy/15" />
                 <div className="relative flex h-full min-h-[220px] flex-col justify-end p-6 sm:min-h-[260px] sm:p-8">
-                  <span className="mb-3 inline-flex w-fit rounded-full bg-accent px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-white">
+                  <Badge variant="accent" className="mb-3">
                     {t(`items.${banner.key}.badge`)}
-                  </span>
+                  </Badge>
                   <h3 className="font-display max-w-md text-xl leading-[1.15] tracking-[-0.02em] text-white sm:text-2xl lg:text-3xl">
                     {t(`items.${banner.key}.title`)}
                   </h3>

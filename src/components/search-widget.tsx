@@ -133,11 +133,8 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <motion.div
+    <div
       id="search"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       className={cn("search-widget w-full", shake && "animate-[shake_0.4s_ease-in-out]")}
     >
       <div
@@ -275,7 +272,7 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
           </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

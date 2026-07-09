@@ -22,7 +22,7 @@ export async function WhyTravellium() {
           return (
             <ScrollReveal key={key} delay={index * 0.05}>
               <article className="h-full rounded-2xl border border-border/70 bg-surface p-5 transition-shadow hover:shadow-[var(--shadow-premium)] sm:p-6">
-                <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-subtle text-navy">
+                <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10 text-accent">
                   <Icon className="h-5 w-5" aria-hidden strokeWidth={1.75} />
                 </span>
                 <h3 className="text-base font-semibold text-navy">{t(`items.${key}.title`)}</h3>
