@@ -132,8 +132,6 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
 
   const today = new Date().toISOString().split("T")[0];
 
-  const rowCols = isHotel ? 3 : tripType === "round" ? 5 : 4;
-
   return (
     <motion.div
       id="search"
@@ -198,10 +196,10 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
           )}
         </div>
 
-        <div className={cn("search-field-row", `search-field-row--${rowCols}`)}>
-          {isHotel ? (
-            <>
-              <div className="search-field-cell">
+        <div className="search-bar">
+          <div className="search-bar-fields">
+            {isHotel ? (
+              <>
                 <CityAutocomplete
                   id="hotel-city"
                   label={t("to")}
@@ -210,20 +208,18 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
                   placeholder={t("toPlaceholder")}
                   error={errors.city}
                 />
-              </div>
-              <DateField
-                id="hotel-depart"
-                label={t("dates")}
-                value={depart}
-                min={today}
-                onChange={setDepart}
-                error={errors.depart}
-              />
-              <PassengersField label={t("guests")} value={passengers} onChange={setPassengers} />
-            </>
-          ) : (
-            <>
-              <div className="search-field-cell">
+                <DateField
+                  id="hotel-depart"
+                  label={t("dates")}
+                  value={depart}
+                  min={today}
+                  onChange={setDepart}
+                  error={errors.depart}
+                />
+                <PassengersField label={t("guests")} value={passengers} onChange={setPassengers} />
+              </>
+            ) : (
+              <>
                 <CityAutocomplete
                   id="from"
                   label={t("from")}
@@ -232,56 +228,51 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
                   placeholder={t("fromPlaceholder")}
                   error={errors.from}
                 />
-              </div>
-              <div className="search-field-cell relative">
-                <CityAutocomplete
-                  id="to"
-                  label={t("to")}
-                  value={to}
-                  onChange={setTo}
-                  placeholder={t("toPlaceholder")}
-                  error={errors.to}
-                />
-                <button
-                  type="button"
-                  onClick={swapCities}
-                  className="swap-cities-btn"
-                  aria-label="Swap cities"
-                >
-                  <ArrowLeftRight className="h-3.5 w-3.5" strokeWidth={2} />
-                </button>
-              </div>
-              <DateField
-                id="depart"
-                label={tripType === "round" ? t("departDate") : t("dates")}
-                value={depart}
-                min={today}
-                onChange={setDepart}
-                error={errors.depart}
-              />
-              {tripType === "round" && (
+                <div className="search-bar-swap-wrap">
+                  <CityAutocomplete
+                    id="to"
+                    label={t("to")}
+                    value={to}
+                    onChange={setTo}
+                    placeholder={t("toPlaceholder")}
+                    error={errors.to}
+                  />
+                  <button
+                    type="button"
+                    onClick={swapCities}
+                    className="swap-cities-btn"
+                    aria-label="Swap cities"
+                  >
+                    <ArrowLeftRight className="h-3.5 w-3.5" strokeWidth={2} />
+                  </button>
+                </div>
                 <DateField
-                  id="return"
-                  label={t("returnDate")}
-                  value={ret}
-                  min={depart || today}
-                  onChange={setRet}
+                  id="depart"
+                  label={tripType === "round" ? t("departDate") : t("dates")}
+                  value={depart}
+                  min={today}
+                  onChange={setDepart}
+                  error={errors.depart}
                 />
-              )}
-              <PassengersField label={t("passengers")} value={passengers} onChange={setPassengers} />
-            </>
-          )}
+                {tripType === "round" && (
+                  <DateField
+                    id="return"
+                    label={t("returnDate")}
+                    value={ret}
+                    min={depart || today}
+                    onChange={setRet}
+                  />
+                )}
+                <PassengersField label={t("passengers")} value={passengers} onChange={setPassengers} />
+              </>
+            )}
+          </div>
 
-          <button type="button" onClick={handleSubmit} className="search-widget-submit search-widget-submit--inline">
+          <button type="button" onClick={handleSubmit} className="search-bar-submit">
             <Search className="h-4 w-4 shrink-0" aria-hidden strokeWidth={2.25} />
             <span>{t("search")}</span>
           </button>
         </div>
-
-        <button type="button" onClick={handleSubmit} className="search-widget-submit search-widget-submit--mobile">
-          <Search className="h-4 w-4" aria-hidden strokeWidth={2.25} />
-          {t("search")}
-        </button>
       </div>
     </motion.div>
   );
@@ -303,11 +294,8 @@ function DateField({
   error?: string;
 }) {
   return (
-    <div className="search-field-cell">
-      <label
-        htmlFor={id}
-        className={cn("search-field", error && "search-field--error")}
-      >
+    <div className="search-bar-field">
+      <label htmlFor={id} className={cn("search-field", error && "search-field--error")}>
         <span className="search-field-label">{label}</span>
         <input
           id={id}
@@ -333,7 +321,7 @@ function PassengersField({
   onChange: (v: string) => void;
 }) {
   return (
-    <div className="search-field-cell">
+    <div className="search-bar-field">
       <label className="search-field">
         <span className="search-field-label">{label}</span>
         <span className="flex items-center gap-2">

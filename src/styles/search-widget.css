@@ -63,7 +63,24 @@
   }
 }
 
-.search-field-cell {
+/* ── Search bar ── */
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.search-bar-fields {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.search-bar-field {
+  min-width: 0;
+}
+
+.search-bar-swap-wrap {
+  position: relative;
   min-width: 0;
 }
 
@@ -72,9 +89,10 @@
   flex-direction: column;
   justify-content: center;
   min-height: 4.25rem;
-  height: 100%;
   padding: 0.875rem 1rem;
   background: var(--surface);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 1rem;
   transition: background-color 200ms ease, box-shadow 200ms ease;
 }
 
@@ -103,18 +121,13 @@
 
 .search-field-input {
   width: 100%;
+  min-width: 0;
   border: 0;
   background: transparent;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: var(--navy);
   outline: none;
-}
-
-@media (min-width: 1280px) {
-  .search-field-input {
-    font-size: 0.9375rem;
-  }
 }
 
 .search-field-input::placeholder {
@@ -130,33 +143,14 @@
   color: #dc2626;
 }
 
-/* Mobile / tablet — stacked fields */
-.search-field-row {
-  display: grid;
-  gap: 0.625rem;
-}
-
-.search-field-row .search-field {
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 1rem;
-}
-
-.search-field-row .search-widget-submit--inline {
-  display: none;
-}
-
-.search-widget-submit--mobile {
+.search-bar-submit {
   display: flex;
-}
-
-.search-widget-submit {
-  display: flex;
-  width: 100%;
   align-items: center;
   justify-content: center;
-  gap: 0.625rem;
-  margin-top: 0.75rem;
-  padding: 0.9375rem 1.25rem;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0 1.25rem;
   border: 0;
   border-radius: 0.875rem;
   background: var(--navy);
@@ -164,96 +158,72 @@
   font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
-  transition:
-    background-color 200ms ease,
-    transform 150ms ease,
-    box-shadow 200ms ease;
+  white-space: nowrap;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
 }
 
-.search-field-row + .search-widget-submit,
-.search-field-row .search-widget-submit:not(.search-widget-submit--inline) {
-  margin-top: 0.75rem;
+.search-bar-submit:hover {
+  background: var(--ink);
+  box-shadow: 0 8px 24px rgba(11, 17, 32, 0.2);
 }
 
-/* Desktop — одна строка: все поля + кнопка */
+/* Desktop — одна строка */
 @media (min-width: 1024px) {
-  .search-field-row {
-    display: flex;
+  .search-bar {
+    flex-direction: row;
     align-items: stretch;
     gap: 0;
     border: 1px solid rgba(15, 23, 42, 0.08);
     border-radius: 1rem;
-    overflow: hidden;
+    overflow: visible;
   }
 
-  .search-field-row .search-field-cell {
+  .search-bar-fields {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 0;
+  }
+
+  .search-bar-field,
+  .search-bar-swap-wrap {
     flex: 1 1 0;
+    min-width: 0;
     border-right: 1px solid rgba(15, 23, 42, 0.08);
   }
 
-  .search-field-row .search-field {
+  .search-bar-field .search-field,
+  .search-bar-swap-wrap .search-field {
+    height: 100%;
     border: 0;
     border-radius: 0;
   }
 
-  .search-field-row .search-widget-submit--inline {
-    display: flex;
-    flex: 0 0 auto;
-    min-width: 8.5rem;
-    margin: 0;
-    padding: 0 1.25rem;
+  .search-bar-submit {
+    flex: 0 0 9rem;
+    width: auto;
+    min-height: unset;
     border-radius: 0;
-    align-self: stretch;
-    align-items: center;
-    justify-content: center;
+    border-top-right-radius: calc(1rem - 1px);
+    border-bottom-right-radius: calc(1rem - 1px);
   }
 
-  .search-widget-submit--mobile {
-    display: none;
+  .search-bar-fields > :last-child {
+    border-right: 0;
   }
 
-  /* Чуть шире колонки для 5 полей */
-  .search-field-row--5 .search-field-cell {
-    flex-basis: 0;
-  }
-
-  .search-field-row--5 .search-field-input {
+  .search-field-input {
     font-size: 0.8125rem;
-  }
-
-  .search-field-row--5 .search-widget-submit--inline {
-    min-width: 7.5rem;
-    padding: 0 1rem;
   }
 }
 
 @media (min-width: 1280px) {
-  .search-field-row--5 .search-field-input {
+  .search-bar-submit {
+    flex-basis: 10rem;
+  }
+
+  .search-field-input {
     font-size: 0.875rem;
-  }
-
-  .search-field-row--5 .search-widget-submit--inline {
-    min-width: 8.75rem;
-  }
-}
-
-.search-widget-submit:hover {
-  background: var(--ink);
-  box-shadow: 0 12px 28px rgba(11, 17, 32, 0.22);
-}
-
-.search-widget-submit:active {
-  transform: scale(0.985);
-}
-
-@media (min-width: 1024px) {
-  .search-widget-submit--inline:hover {
-    transform: none;
-  }
-
-  .search-widget-submit--inline:active {
-    transform: none;
-    filter: brightness(0.95);
   }
 }
 
@@ -285,45 +255,32 @@
 }
 
 .swap-cities-btn {
-  position: absolute;
-  right: 0.5rem;
-  top: 50%;
-  z-index: 2;
   display: none;
-  height: 1.75rem;
-  width: 1.75rem;
-  translate: 0 -50%;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  background: var(--surface);
-  color: var(--muted-foreground);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-  transition: color 200ms ease, border-color 200ms ease, transform 300ms ease;
 }
 
 @media (min-width: 1024px) {
   .swap-cities-btn {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 3;
     display: flex;
-    right: -0.875rem;
-    translate: 50% -50%;
+    height: 1.75rem;
+    width: 1.75rem;
+    translate: -50% -50%;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    background: var(--surface);
+    color: var(--muted-foreground);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    transition: color 200ms ease, transform 300ms ease;
   }
-}
 
-.swap-cities-btn:hover {
-  color: var(--navy);
-  border-color: rgba(15, 23, 42, 0.14);
-  transform: rotate(180deg);
-}
-
-.search-field-row .search-field-cell .search-field {
-  padding-right: 2rem;
-}
-
-@media (min-width: 1024px) {
-  .search-field-row .search-field-cell:has(.swap-cities-btn) .search-field {
-    padding-right: 1.25rem;
+  .swap-cities-btn:hover {
+    color: var(--navy);
+    transform: rotate(180deg);
   }
 }

@@ -49,7 +49,7 @@ export function CityAutocomplete({
   };
 
   return (
-    <div ref={wrapRef} className={cn("relative", className)}>
+    <div ref={wrapRef} className={cn("search-bar-field relative min-w-0", className)}>
       <label
         htmlFor={id}
         className={cn("search-field cursor-pointer", error && "search-field--error")}
@@ -70,7 +70,7 @@ export function CityAutocomplete({
           className="search-field-input"
         />
       </label>
-      {error && <p className="mt-1 px-1 text-[11px] font-medium text-red-600">{error}</p>}
+      {error && <p className="search-field-error">{error}</p>}
       {open && results.length > 0 && (
         <ul
           className="absolute left-0 right-0 top-[calc(100%-0.25rem)] z-30 max-h-52 overflow-auto rounded-xl border border-border/80 bg-surface py-1 shadow-[var(--shadow-premium-lg)]"
