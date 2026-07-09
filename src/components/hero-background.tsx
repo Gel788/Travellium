@@ -14,14 +14,14 @@ export function HeroBackground({ activeTab, className }: HeroBackgroundProps) {
   const reduceMotion = useReducedMotion();
 
   return (
-    <div className={className}>
+    <div className={className} aria-hidden>
       <AnimatePresence mode="sync">
         <motion.div
           key={activeTab}
-          initial={reduceMotion ? false : { opacity: 0, scale: 1.04 }}
+          initial={reduceMotion ? false : { opacity: 0, scale: 1.03 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={reduceMotion ? undefined : { opacity: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="absolute inset-0"
         >
           <Image
@@ -29,12 +29,14 @@ export function HeroBackground({ activeTab, className }: HeroBackgroundProps) {
             alt=""
             fill
             priority={activeTab === "flights"}
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover object-center"
+            sizes="100vw"
+            className="object-cover object-[center_35%] lg:object-[center_30%]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy/50 via-navy/10 to-transparent lg:from-navy/30 lg:via-transparent" />
         </motion.div>
       </AnimatePresence>
+
+      {/* Scrim — фото видно, текст и виджет читаемы */}
+      <div className="hero-overlay" />
     </div>
   );
 }

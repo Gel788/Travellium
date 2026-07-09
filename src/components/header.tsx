@@ -33,12 +33,12 @@ export function Header() {
         "sticky top-0 z-50 border-b transition-all duration-200",
         scrolled
           ? "border-border/80 bg-surface/95 shadow-sm backdrop-blur-xl"
-          : "border-transparent bg-background/90 backdrop-blur-md",
+          : "border-white/10 bg-navy/10 backdrop-blur-md",
       )}
     >
       <div className="mx-auto flex h-[3.75rem] max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-10">
         <Link href="/" className="cursor-pointer shrink-0">
-          <Logo />
+          <Logo inverted={!scrolled} />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
@@ -46,7 +46,12 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-subtle hover:text-navy"
+              className={cn(
+                "cursor-pointer rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                scrolled
+                  ? "text-muted-foreground hover:bg-subtle hover:text-navy"
+                  : "text-white/85 hover:bg-white/10 hover:text-white",
+              )}
             >
               {link.label}
             </Link>
@@ -54,20 +59,26 @@ export function Header() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
-          <LocaleSwitcher />
+          <LocaleSwitcher inverted={!scrolled} />
           <Link
             href="/login"
-            className="hidden cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-navy sm:inline"
+            className={cn(
+              "hidden cursor-pointer rounded-lg px-3 py-2 text-sm font-medium transition-colors sm:inline",
+              scrolled ? "text-muted-foreground hover:text-navy" : "text-white/85 hover:text-white",
+            )}
           >
             {t("login")}
           </Link>
           <Link
             href="/register"
-            className="hidden cursor-pointer rounded-full bg-navy px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-ink sm:inline-flex"
+            className={cn(
+              "hidden cursor-pointer rounded-full px-4 py-2 text-sm font-semibold transition-colors sm:inline-flex",
+              scrolled ? "bg-navy text-white hover:bg-ink" : "bg-white text-navy hover:bg-white/90",
+            )}
           >
             {t("signUp")}
           </Link>
-          <MobileNav />
+          <MobileNav light={!scrolled} />
         </div>
       </div>
     </header>

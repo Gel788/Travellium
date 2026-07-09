@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 
-export function MobileNav() {
+export function MobileNav({ light = false }: { light?: boolean }) {
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
 
@@ -29,7 +30,12 @@ export function MobileNav() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-border/70 bg-surface text-navy transition-colors hover:bg-subtle"
+        className={cn(
+          "flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border transition-colors",
+          light
+            ? "border-white/25 bg-white/10 text-white hover:bg-white/20"
+            : "border-border/70 bg-surface text-navy hover:bg-subtle",
+        )}
         aria-expanded={open}
         aria-label={open ? "Close menu" : "Open menu"}
       >

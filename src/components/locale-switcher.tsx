@@ -10,14 +10,19 @@ const locales: { code: Locale; label: string }[] = [
   { code: "en", label: "EN" },
 ];
 
-export function LocaleSwitcher() {
+export function LocaleSwitcher({ inverted = false }: { inverted?: boolean }) {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const router = useRouter();
 
   return (
     <div
-      className="inline-flex rounded-full bg-subtle/80 p-0.5 ring-1 ring-border/60"
+      className={cn(
+        "inline-flex rounded-full p-0.5",
+        inverted
+          ? "bg-white/15 ring-1 ring-white/25"
+          : "bg-subtle/80 ring-1 ring-border/60",
+      )}
       role="group"
       aria-label="Language"
     >
@@ -29,8 +34,12 @@ export function LocaleSwitcher() {
           className={cn(
             "cursor-pointer rounded-full px-3 py-1.5 text-[11px] font-bold tracking-wide transition-all duration-200",
             locale === code
-              ? "bg-surface text-navy shadow-sm"
-              : "text-muted-foreground hover:text-navy",
+              ? inverted
+                ? "bg-white text-navy shadow-sm"
+                : "bg-surface text-navy shadow-sm"
+              : inverted
+                ? "text-white/75 hover:text-white"
+                : "text-muted-foreground hover:text-navy",
           )}
           aria-pressed={locale === code}
         >
