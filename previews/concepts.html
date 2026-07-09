@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travellium — 3 визуальных направления</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0c0f14;
+      --surface: #151922;
+      --border: rgba(255,255,255,0.08);
+      --text: #f4f6fa;
+      --muted: #8b95a8;
+    }
+    body {
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .page { max-width: 1280px; margin: 0 auto; padding: 48px 24px 80px; }
+    header { margin-bottom: 48px; }
+    header p { color: var(--muted); max-width: 640px; margin-top: 12px; font-size: 1.05rem; }
+    h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: -0.03em; }
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+      background: rgba(125,211,252,0.1);
+      border: 1px solid rgba(125,211,252,0.2);
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+      gap: 24px;
+    }
+    .concept {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .concept:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.16); }
+    .concept-preview { height: 280px; position: relative; overflow: hidden; }
+    .concept-body { padding: 24px; }
+    .concept-body h2 { font-size: 1.35rem; margin-bottom: 8px; letter-spacing: -0.02em; }
+    .concept-body p { color: var(--muted); font-size: 0.925rem; margin-bottom: 16px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+    }
+    .swatches { display: flex; gap: 8px; margin-bottom: 16px; }
+    .swatch { width: 32px; height: 32px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+    .fonts { font-size: 0.8rem; color: var(--muted); }
+    .fonts strong { color: var(--text); display: block; margin-bottom: 4px; }
+
+    /* Direction 1: Horizon */
+    .d1 { background: linear-gradient(165deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%); }
+    .d1 .mini-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 20px; font-size: 0.7rem; color: rgba(255,255,255,0.7);
+    }
+    .d1 .logo { font-weight: 700; color: #fff; font-size: 0.85rem; letter-spacing: -0.02em; }
+    .d1 .widget {
+      margin: 0 16px 20px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.25);
+    }
+    .d1 .tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+    .d1 .tab {
+      flex: 1; text-align: center; font-size: 0.65rem; font-weight: 600;
+      padding: 8px 4px; border-radius: 8px; color: #64748b;
+    }
+    .d1 .tab.active { background: #0f172a; color: #fff; }
+    .d1 .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .d1 .field {
+      background: #f1f5f9; border-radius: 10px; padding: 10px 12px;
+      font-size: 0.65rem; color: #94a3b8;
+    }
+    .d1 .field span { display: block; color: #0f172a; font-weight: 600; margin-top: 2px; }
+    .d1 .cta {
+      margin-top: 10px; background: #f97316; color: #fff; border: none;
+      width: 100%; padding: 12px; border-radius: 10px; font-weight: 600; font-size: 0.75rem;
+    }
+
+    /* Direction 2: Atlas */
+    .d2 {
+      background: #faf8f5;
+      display: flex; flex-direction: column;
+    }
+    .d2 .editorial {
+      flex: 1; position: relative;
+      background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80') center/cover;
+    }
+    .d2 .editorial::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(15,12,10,0.85) 0%, transparent 60%);
+    }
+    .d2 .headline {
+      position: absolute; bottom: 80px; left: 20px; right: 20px; z-index: 1;
+      font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 600;
+      color: #fff; line-height: 1.2; letter-spacing: -0.02em;
+    }
+    .d2 .glass {
+      position: absolute; bottom: -40px; left: 16px; right: 16px; z-index: 2;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+      border-radius: 14px; padding: 14px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    .d2 .glass-row {
+      display: flex; gap: 8px; font-size: 0.65rem; color: #78716c;
+    }
+    .d2 .glass-row div { flex: 1; padding: 8px; border-right: 1px solid #e7e5e4; }
+    .d2 .glass-row div:last-child { border: none; }
+    .d2 .glass-row strong { display: block; color: #1c1917; font-family: 'DM Sans', sans-serif; }
+
+    /* Direction 3: Pulse */
+    .d3 { background: #09090b; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .d3 .top { display: flex; justify-content: space-between; align-items: center; }
+    .d3 .top span { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 0.9rem; }
+    .d3 .pill-nav {
+      display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px;
+    }
+    .d3 .pill {
+      flex-shrink: 0; font-size: 0.65rem; font-weight: 600; padding: 8px 14px;
+      border-radius: 999px; background: #27272a; color: #a1a1aa;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .d3 .pill.on { background: #2563eb; color: #fff; }
+    .d3 .search-bar {
+      background: #18181b; border: 1px solid #27272a; border-radius: 14px;
+      padding: 14px; font-size: 0.7rem; color: #71717a;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .d3 .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; }
+    .d3 .card {
+      background: #18181b; border-radius: 12px; padding: 12px;
+      border: 1px solid #27272a;
+    }
+    .d3 .card .price { color: #22d3ee; font-weight: 700; font-size: 0.85rem; margin-top: 6px; }
+    .d3 .card .route { font-size: 0.65rem; color: #a1a1aa; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .d3 .card .route strong { color: #fafafa; display: block; font-size: 0.75rem; }
+
+    .recommend {
+      margin-top: 40px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(249,115,22,0.1));
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+    }
+    .recommend h3 { margin-bottom: 8px; }
+    .recommend p { color: var(--muted); font-size: 0.95rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .concept { transition: none; }
+      .concept:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <span class="badge">Travellium · Design Exploration</span>
+      <h1>3 направления для travel-платформы</h1>
+      <p>
+        Авиа · ЖД · Автобус · Отели — единый поиск в hero. Реферальная программа и виджеты — позже.
+        Открой этот файл в браузере и выбери направление — после этого соберём Next.js сайт.
+      </p>
+    </header>
+
+    <div class="grid">
+      <!-- Horizon -->
+      <article class="concept">
+        <div class="concept-preview d1">
+          <div class="mini-nav">
+            <span class="logo">Travellium</span>
+            <span>Войти · RU</span>
+          </div>
+          <div class="widget">
+            <div class="tabs">
+              <div class="tab active">✈ Авиа</div>
+              <div class="tab">🚂 ЖД</div>
+              <div class="tab">🚌 Автобус</div>
+              <div class="tab">🏨 Отели</div>
+            </div>
+            <div class="fields">
+              <div class="field">Откуда<span>Москва</span></div>
+              <div class="field">Куда<span>Санкт-Петербург</span></div>
+              <div class="field">Когда<span>15 июл — 22 июл</span></div>
+              <div class="field">Пассажиры<span>2 взрослых</span></div>
+            </div>
+            <button class="cta">Найти билеты</button>
+          </div>
+        </div>
+        <div class="concept-body">
+          <h2>1. Horizon</h2>
+          <p>Премиальный trust-first стиль. Чистый hero, белый виджет на тёмном фоне, акцент на надёжность и простоту — как Kiwi.com / Booking, но без generic AI-slop.</p>
+          <div class="tags">
+            <span class="tag">Trust-first</span>
+            <span class="tag">Unified search widget</span>
+            <span class="tag">Desktop + mobile</span>
+          </div>
+          <div class="swatches">
+            <div class="swatch" style="background:#0f172a" title="Navy"></div>
+            <div class="swatch" style="background:#f97316" title="CTA Orange"></div>
+            <div class="swatch" style="background:#f8fafc" title="Surface"></div>
+            <div class="swatch" style="background:#64748b" title="Muted"></div>
+          </div>
+          <div class="fonts">
+            <strong>Instrument Sans</strong>
+            Нейтральная геометрия, отличная читаемость в формах и таблицах
+          </div>
+        </div>
+      </article>
+
+      <!-- Atlas -->
+      <article class="concept">
+        <div class="concept-preview d2">
+          <div class="editorial">
+            <p class="headline">Путешествуй<br/>без границ</p>
+            <div class="glass">
+              <div class="glass-row">
+                <div>Откуда<strong>Москва</strong></div>
+                <div>Куда<strong>Казань</strong></div>
+                <div>Даты<strong>Июль</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="concept-body">
+          <h2>2. Atlas</h2>
+          <p>Editorial travel magazine. Крупная фотография, асимметричная типографика, glass-панель поиска. Эмоция путешествия + функциональность.</p>
+          <div class="tags">
+            <span class="tag">Editorial</span>
+            <span class="tag">Photography-led</span>
+            <span class="tag">Premium feel</span>
+          </div>
+          <div class="swatches">
+            <div class="swatch" style="background:#1c1917" title="Ink"></div>
+            <div class="swatch" style="background:#faf8f5" title="Warm white"></div>
+            <div class="swatch" style="background:#b45309" title="Amber"></div>
+            <div class="swatch" style="background:#78716c" title="Stone"></div>
+          </div>
+          <div class="fonts">
+            <strong>Fraunces + DM Sans</strong>
+            Serif-заголовки для storytelling, sans для UI
+          </div>
+        </div>
+      </article>
+
+      <!-- Pulse -->
+      <article class="concept">
+        <div class="concept-preview d3">
+          <div class="top">
+            <span>Travellium</span>
+            <span style="font-size:0.7rem;color:#71717a">☰</span>
+          </div>
+          <div class="pill-nav">
+            <span class="pill on">Авиа</span>
+            <span class="pill">ЖД</span>
+            <span class="pill">Автобус</span>
+            <span class="pill">Отели</span>
+          </div>
+          <div class="search-bar">🔍 Куда летим? Москва → Сочи, 20 июл</div>
+          <div class="cards">
+            <div class="card">
+              <div class="route"><strong>Москва → Сочи</strong>Аэрофлот · прямой</div>
+              <div class="price">от 4 890 ₽</div>
+            </div>
+            <div class="card">
+              <div class="route"><strong>Москва → Казань</strong>S7 · 1 пересадка</div>
+              <div class="price">от 3 200 ₽</div>
+            </div>
+          </div>
+        </div>
+        <div class="concept-body">
+          <h2>3. Pulse</h2>
+          <p>Быстрый mobile-first aggregator. Pill-навигация, карточки маршрутов, snappy micro-interactions. Для аудитории, которая бронирует с телефона за 30 секунд.</p>
+          <div class="tags">
+            <span class="tag">Mobile-first</span>
+            <span class="tag">Speed</span>
+            <span class="tag">Deal cards</span>
+          </div>
+          <div class="swatches">
+            <div class="swatch" style="background:#09090b" title="Dark"></div>
+            <div class="swatch" style="background:#2563eb" title="Electric blue"></div>
+            <div class="swatch" style="background:#22d3ee" title="Cyan accent"></div>
+            <div class="swatch" style="background:#18181b" title="Surface"></div>
+          </div>
+          <div class="fonts">
+            <strong>Plus Jakarta Sans</strong>
+            Современный, дружелюбный, отлично на мобилке
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="recommend">
+      <h3>Рекомендация: Horizon</h3>
+      <p>
+        Для платформы с 4 типами транспорта + отелями лучше всего подходит <strong>Horizon</strong>:
+        единый виджет с табами масштабируется под будущие embed-виджеты, выглядит профессионально
+        и не устареет через полгода. Atlas — если хотите больше эмоции и бренда. Pulse — если 80%+ мобильный трафик.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

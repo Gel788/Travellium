@@ -1,0 +1,299 @@
+{
+  "meta": {
+    "title": "Travellium — flights, trains, buses & hotels",
+    "description": "Compare and book flights, trains, buses, and hotels in one place. Simple, fast, reliable."
+  },
+  "nav": {
+    "flights": "Flights",
+    "trains": "Trains",
+    "buses": "Buses",
+    "hotels": "Hotels",
+    "howItWorks": "How it works",
+    "about": "About",
+    "faq": "FAQ",
+    "login": "Log in",
+    "signUp": "Sign up"
+  },
+  "hero": {
+    "eyebrow": "Travel without the friction",
+    "title": "One search — every way to get there",
+    "subtitle": "Flights, trains, buses, and hotels. Compare prices and book in minutes.",
+    "stats": {
+      "routes": "50,000+ routes",
+      "partners": "200+ partners",
+      "support": "24/7 support"
+    }
+  },
+  "search": {
+    "tabs": {
+      "flights": "Flights",
+      "trains": "Trains",
+      "buses": "Buses",
+      "hotels": "Hotels"
+    },
+    "from": "From",
+    "to": "To",
+    "dates": "Dates",
+    "passengers": "Passengers",
+    "guests": "Guests",
+    "fromPlaceholder": "City or airport",
+    "toPlaceholder": "City or airport",
+    "datesPlaceholder": "Select dates",
+    "passengersPlaceholder": "1 adult",
+    "guestsPlaceholder": "2 guests, 1 room",
+    "search": "Search",
+    "roundTrip": "Round trip",
+    "oneWay": "One way",
+    "comingSoon": "Booking widget coming soon",
+    "departDate": "Depart",
+    "returnDate": "Return",
+    "errors": {
+      "fromRequired": "Enter departure city",
+      "toRequired": "Enter destination city",
+      "cityRequired": "Enter a city",
+      "sameCity": "Cities must be different",
+      "dateRequired": "Select a date",
+      "returnRequired": "Select return date"
+    },
+    "hints": {
+      "flights": "Compare airlines and find the best fares worldwide",
+      "trains": "Train tickets across Russia & CIS — e-ticket ready",
+      "buses": "Intercity coaches — direct routes and connections",
+      "hotels": "Hotels and apartments — from hostels to luxury"
+    }
+  },
+  "mosaic": {
+    "caption": "Flights · Trains · Buses · Hotels — one journey"
+  },
+  "promos": {
+    "eyebrow": "Special offers",
+    "items": {
+      "summer": {
+        "badge": "−30%",
+        "title": "Summer seaside hotels",
+        "subtitle": "Sochi, Anapa, Gelendzhik — from $39/night",
+        "cta": "Browse hotels"
+      },
+      "trains": {
+        "badge": "New",
+        "title": "Train tickets, no queues",
+        "subtitle": "E-registration on every route",
+        "cta": "Find a train"
+      }
+    }
+  },
+  "destinations": {
+    "eyebrow": "Popular",
+    "title": "Trending destinations",
+    "subtitle": "Best fares on the most searched routes",
+    "from": "from {price}",
+    "items": {
+      "sochi": { "city": "Sochi", "country": "Russia", "price": "$54" },
+      "istanbul": { "city": "Istanbul", "country": "Turkey", "price": "$138" },
+      "dubai": { "city": "Dubai", "country": "UAE", "price": "$318" },
+      "spb": { "city": "Saint Petersburg", "country": "Russia", "price": "$36" },
+      "kazan": { "city": "Kazan", "country": "Russia", "price": "$32" },
+      "tbilisi": { "city": "Tbilisi", "country": "Georgia", "price": "$101" }
+    }
+  },
+  "steps": {
+    "eyebrow": "Simple",
+    "title": "How it works",
+    "subtitle": "Three steps from search to booking",
+    "items": {
+      "search": {
+        "title": "Pick your route",
+        "description": "Enter city, dates, and trip type — flight, train, bus, or hotel."
+      },
+      "compare": {
+        "title": "Compare options",
+        "description": "See the best offers from trusted partners in one clear list."
+      },
+      "book": {
+        "title": "Book online",
+        "description": "Pay securely and get your confirmation by email in seconds."
+      }
+    }
+  },
+  "features": {
+    "eyebrow": "Why us",
+    "title": "Travellium — your reliable travel companion",
+    "subtitle": "We bring together top carriers and hotels so you spend less time searching.",
+    "items": {
+      "unified": {
+        "title": "Everything in one place",
+        "description": "Stop jumping between sites — search tickets and hotels on one platform."
+      },
+      "secure": {
+        "title": "Secure payments",
+        "description": "Protected transactions and transparent pricing with no hidden fees."
+      },
+      "support": {
+        "title": "24/7 support",
+        "description": "Our team is here before, during, and after your trip."
+      },
+      "referral": {
+        "title": "Referral program",
+        "description": "Invite friends and earn rewards — launching soon on the platform."
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready for your next trip?",
+    "subtitle": "Start searching now — no sign-up required.",
+    "button": "Find tickets"
+  },
+  "trust": {
+    "eyebrow": "Trusted by travelers",
+    "title": "Partners & reviews",
+    "contact": "Questions?",
+    "partners": {
+      "aeroflot": "Aeroflot",
+      "s7": "S7 Airlines",
+      "rzd": "Russian Railways",
+      "ostrovok": "Ostrovok",
+      "flixbus": "FlixBus",
+      "booking": "Booking.com"
+    },
+    "reviews": {
+      "anna": {
+        "name": "Anna K.",
+        "route": "Moscow → Sochi",
+        "text": "Found a cheaper fare than on the airline site. Clean interface, no extra steps."
+      },
+      "dmitry": {
+        "name": "Dmitry V.",
+        "route": "St. Petersburg → Kazan, train",
+        "text": "Great to compare trains and flights in one place. Waiting for full booking."
+      },
+      "elena": {
+        "name": "Elena M.",
+        "route": "Hotel in Istanbul",
+        "text": "Fast hotel search with sensible filters. Support replied the same day."
+      }
+    }
+  },
+  "searchResults": {
+    "types": {
+      "flights": "Flights",
+      "trains": "Trains",
+      "buses": "Buses",
+      "hotels": "Hotels"
+    },
+    "passengers": "{count, plural, one {# passenger} other {# passengers}}",
+    "widgetNotice": "These are demo results. The full booking widget will be connected later.",
+    "option": "Option {n}",
+    "carriers": {
+      "flights": "Partner airline",
+      "trains": "Partner rail carrier",
+      "buses": "Partner bus operator",
+      "hotels": "Partner hotel"
+    },
+    "duration": "{hours}h {mins}m",
+    "price": "from {price} ₽",
+    "select": "Select",
+    "back": "New search"
+  },
+  "auth": {
+    "loginTitle": "Log in to Travellium",
+    "loginSubtitle": "Save searches and get price-drop alerts.",
+    "registerTitle": "Create account",
+    "registerSubtitle": "Sign up in under a minute.",
+    "password": "Password",
+    "loginButton": "Log in",
+    "registerButton": "Create account",
+    "noAccount": "No account?",
+    "hasAccount": "Already have an account?",
+    "registerLink": "Sign up",
+    "loginLink": "Log in",
+    "successTitle": "Done!",
+    "successText": "Auth is in demo mode for now. Full account features are coming soon.",
+    "backHome": "Back to home"
+  },
+  "about": {
+    "eyebrow": "Company",
+    "title": "Travellium — travel made simple",
+    "p1": "We are building one platform to search flights, trains, buses, and hotels — less tab-switching, clearer pricing.",
+    "p2": "The site currently runs in search and demo mode. Partner widgets and payments are in development.",
+    "p3": "Partnerships: support@travellium.com"
+  },
+  "legal": {
+    "privacy": {
+      "eyebrow": "Legal",
+      "title": "Privacy policy",
+      "p1": "Travellium processes personal data only to operate the service: search, registration, and support.",
+      "p2": "We do not share data with third parties without consent, except where required by law.",
+      "p3": "The full policy will be published before payment features launch."
+    },
+    "terms": {
+      "eyebrow": "Legal",
+      "title": "Terms of use",
+      "p1": "By using Travellium you agree to these terms and demo-mode limitations.",
+      "p2": "Prices and availability on demo pages are illustrative and not an offer.",
+      "p3": "Booking terms will be published when partner APIs are connected."
+    }
+  },
+  "faq": {
+    "eyebrow": "Help",
+    "title": "FAQ",
+    "subtitle": "Common questions about Travellium",
+    "items": {
+      "booking": {
+        "q": "Can I book a ticket yet?",
+        "a": "Search and demo results are available now. Full booking will launch after partner integration."
+      },
+      "payment": {
+        "q": "Which payment methods will you support?",
+        "a": "We plan cards and popular payment providers. The final list will be announced at launch."
+      },
+      "refund": {
+        "q": "How do refunds work?",
+        "a": "Refund rules depend on the carrier or hotel fare. Details will be shown at checkout."
+      },
+      "support": {
+        "q": "How do I contact support?",
+        "a": "Email support@travellium.com — we reply during business hours; 24/7 support is planned."
+      },
+      "referral": {
+        "q": "When does the referral program launch?",
+        "a": "It is in development. Sign up early and we will notify you at launch."
+      }
+    }
+  },
+  "referral": {
+    "eyebrow": "Coming soon",
+    "title": "Referral program",
+    "subtitle": "Invite friends and earn travel rewards",
+    "comingSoon": "The program is in development. Register now and we will notify you at launch.",
+    "cta": "Sign up"
+  },
+  "cookies": {
+    "title": "We use cookies",
+    "text": "Cookies help us improve the service and remember your preferences. By continuing, you agree to our privacy policy.",
+    "accept": "Accept",
+    "learnMore": "Learn more"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The link may be outdated or the page may have moved.",
+    "back": "Back to home"
+  },
+  "footer": {
+    "tagline": "Travel made simple.",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "links": {
+      "flights": "Flights",
+      "trains": "Train tickets",
+      "buses": "Buses",
+      "hotels": "Hotels",
+      "about": "About us",
+      "faq": "FAQ",
+      "referral": "Referral program",
+      "privacy": "Privacy policy",
+      "terms": "Terms of use"
+    },
+    "copyright": "© {year} Travellium. All rights reserved."
+  }
+}
