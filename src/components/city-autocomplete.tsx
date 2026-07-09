@@ -52,10 +52,7 @@ export function CityAutocomplete({
     <div ref={wrapRef} className={cn("relative", className)}>
       <label
         htmlFor={id}
-        className={cn(
-          "search-field cursor-pointer rounded-2xl border border-border/70 sm:rounded-none sm:border-0",
-          error && "ring-2 ring-red-400/60 ring-inset",
-        )}
+        className={cn("search-field cursor-pointer", error && "search-field--error")}
       >
         <span className="search-field-label">{label}</span>
         <input

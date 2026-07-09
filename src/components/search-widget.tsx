@@ -132,6 +132,8 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
 
   const today = new Date().toISOString().split("T")[0];
 
+  const rowCols = isHotel ? 3 : tripType === "round" ? 5 : 4;
+
   return (
     <motion.div
       id="search"
@@ -165,53 +167,50 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
       </div>
 
       <div className="search-widget-body">
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={activeTab}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="mb-3 px-0.5 text-xs leading-relaxed text-muted-foreground sm:text-[13px]"
-          >
-            {t(`hints.${activeTab}`)}
-          </motion.p>
-        </AnimatePresence>
+        <div className="search-widget-toolbar">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={activeTab}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="search-widget-hint"
+            >
+              {t(`hints.${activeTab}`)}
+            </motion.p>
+          </AnimatePresence>
 
-        {!isHotel && (
-          <div className="trip-toggle" role="group" aria-label="Trip type">
-            {(["round", "one"] as const).map((type) => (
-              <button
-                key={type}
-                type="button"
-                data-active={tripType === type}
-                onClick={() => setTripType(type)}
-                className="trip-toggle-btn"
-              >
-                {type === "round" ? t("roundTrip") : t("oneWay")}
-              </button>
-            ))}
-          </div>
-        )}
-
-        <div
-          className={cn(
-            "search-field-grid",
-            !isHotel && "search-field-grid--four-cols",
-            isHotel && "hotel-grid",
+          {!isHotel && (
+            <div className="trip-toggle" role="group" aria-label="Trip type">
+              {(["round", "one"] as const).map((type) => (
+                <button
+                  key={type}
+                  type="button"
+                  data-active={tripType === type}
+                  onClick={() => setTripType(type)}
+                  className="trip-toggle-btn"
+                >
+                  {type === "round" ? t("roundTrip") : t("oneWay")}
+                </button>
+              ))}
+            </div>
           )}
-        >
+        </div>
+
+        <div className={cn("search-field-row", `search-field-row--${rowCols}`)}>
           {isHotel ? (
             <>
-              <CityAutocomplete
-                id="hotel-city"
-                label={t("to")}
-                value={city}
-                onChange={setCity}
-                placeholder={t("toPlaceholder")}
-                error={errors.city}
-                className="hotel-city"
-              />
+              <div className="search-field-cell">
+                <CityAutocomplete
+                  id="hotel-city"
+                  label={t("to")}
+                  value={city}
+                  onChange={setCity}
+                  placeholder={t("toPlaceholder")}
+                  error={errors.city}
+                />
+              </div>
               <DateField
                 id="hotel-depart"
                 label={t("dates")}
@@ -224,15 +223,17 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
             </>
           ) : (
             <>
-              <CityAutocomplete
-                id="from"
-                label={t("from")}
-                value={from}
-                onChange={setFrom}
-                placeholder={t("fromPlaceholder")}
-                error={errors.from}
-              />
-              <div className="relative">
+              <div className="search-field-cell">
+                <CityAutocomplete
+                  id="from"
+                  label={t("from")}
+                  value={from}
+                  onChange={setFrom}
+                  placeholder={t("fromPlaceholder")}
+                  error={errors.from}
+                />
+              </div>
+              <div className="search-field-cell relative">
                 <CityAutocomplete
                   id="to"
                   label={t("to")}
@@ -258,7 +259,7 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
                 onChange={setDepart}
                 error={errors.depart}
               />
-              {tripType === "round" ? (
+              {tripType === "round" && (
                 <DateField
                   id="return"
                   label={t("returnDate")}
@@ -266,20 +267,18 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
                   min={depart || today}
                   onChange={setRet}
                 />
-              ) : (
-                <PassengersField label={t("passengers")} value={passengers} onChange={setPassengers} />
               )}
+              <PassengersField label={t("passengers")} value={passengers} onChange={setPassengers} />
             </>
           )}
+
+          <button type="button" onClick={handleSubmit} className="search-widget-submit search-widget-submit--inline">
+            <Search className="h-4 w-4 shrink-0" aria-hidden strokeWidth={2.25} />
+            <span>{t("search")}</span>
+          </button>
         </div>
 
-        {!isHotel && tripType === "round" && (
-          <div className="round-trip-passengers mt-2.5 max-w-xs">
-            <PassengersField label={t("passengers")} value={passengers} onChange={setPassengers} />
-          </div>
-        )}
-
-        <button type="button" onClick={handleSubmit} className="search-widget-submit">
+        <button type="button" onClick={handleSubmit} className="search-widget-submit search-widget-submit--mobile">
           <Search className="h-4 w-4" aria-hidden strokeWidth={2.25} />
           {t("search")}
         </button>
@@ -295,7 +294,6 @@ function DateField({
   min,
   onChange,
   error,
-  className,
 }: {
   id: string;
   label: string;
@@ -303,13 +301,12 @@ function DateField({
   min: string;
   onChange: (v: string) => void;
   error?: string;
-  className?: string;
 }) {
   return (
-    <div className={className}>
+    <div className="search-field-cell">
       <label
         htmlFor={id}
-        className={cn("search-field cursor-pointer rounded-2xl border border-border/70 sm:rounded-none sm:border-0", error && "ring-2 ring-red-400/60 ring-inset")}
+        className={cn("search-field", error && "search-field--error")}
       >
         <span className="search-field-label">{label}</span>
         <input
@@ -321,7 +318,7 @@ function DateField({
           className="search-field-input cursor-pointer [color-scheme:light]"
         />
       </label>
-      {error && <p className="mt-1 px-1 text-[11px] font-medium text-red-600">{error}</p>}
+      {error && <p className="search-field-error">{error}</p>}
     </div>
   );
 }
@@ -330,16 +327,14 @@ function PassengersField({
   label,
   value,
   onChange,
-  className,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
-  className?: string;
 }) {
   return (
-    <div className={className}>
-      <label className="search-field cursor-pointer rounded-2xl border border-border/70 sm:rounded-none sm:border-0">
+    <div className="search-field-cell">
+      <label className="search-field">
         <span className="search-field-label">{label}</span>
         <span className="flex items-center gap-2">
           <Users className="h-4 w-4 shrink-0 text-muted-foreground/70" strokeWidth={1.75} />
