@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
-import { cities, cityLabel, filterCities, type City } from "@/lib/cities";
+import { cities, filterCities, cityLabel, type City } from "@/lib/cities";
 import { cn } from "@/lib/utils";
 
 type CityAutocompleteProps = {
@@ -12,7 +12,6 @@ type CityAutocompleteProps = {
   onChange: (value: string) => void;
   placeholder: string;
   error?: string;
-  icon?: React.ReactNode;
   className?: string;
 };
 
@@ -23,7 +22,6 @@ export function CityAutocomplete({
   onChange,
   placeholder,
   error,
-  icon,
   className,
 }: CityAutocompleteProps) {
   const locale = useLocale();
@@ -44,9 +42,9 @@ export function CityAutocomplete({
   const results = filterCities(query, locale);
 
   const pick = (city: City) => {
-    const label = cityLabel(city, locale);
-    setQuery(label);
-    onChange(label);
+    const labelText = cityLabel(city, locale);
+    setQuery(labelText);
+    onChange(labelText);
     setOpen(false);
   };
 
@@ -55,36 +53,30 @@ export function CityAutocomplete({
       <label
         htmlFor={id}
         className={cn(
-          "group block cursor-pointer bg-surface px-4 py-3.5 transition-colors duration-200",
-          "hover:bg-subtle/80 focus-within:bg-subtle/80",
-          error && "ring-1 ring-red-400 ring-inset",
+          "search-field cursor-pointer rounded-2xl border border-border/70 sm:rounded-none sm:border-0",
+          error && "ring-2 ring-red-400/60 ring-inset",
         )}
       >
-        <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-          {label}
-        </span>
-        <span className="flex items-center justify-between gap-2">
-          <input
-            id={id}
-            type="text"
-            value={query}
-            placeholder={placeholder}
-            autoComplete="off"
-            onChange={(e) => {
-              setQuery(e.target.value);
-              onChange(e.target.value);
-              setOpen(true);
-            }}
-            onFocus={() => setOpen(true)}
-            className="w-full bg-transparent text-[0.9375rem] font-medium text-navy outline-none placeholder:text-muted-foreground/50"
-          />
-          {icon}
-        </span>
+        <span className="search-field-label">{label}</span>
+        <input
+          id={id}
+          type="text"
+          value={query}
+          placeholder={placeholder}
+          autoComplete="off"
+          onChange={(e) => {
+            setQuery(e.target.value);
+            onChange(e.target.value);
+            setOpen(true);
+          }}
+          onFocus={() => setOpen(true)}
+          className="search-field-input"
+        />
       </label>
-      {error && <p className="px-4 py-1 text-[11px] text-red-600">{error}</p>}
+      {error && <p className="mt-1 px-1 text-[11px] font-medium text-red-600">{error}</p>}
       {open && results.length > 0 && (
         <ul
-          className="absolute left-0 right-0 top-full z-20 mt-1 max-h-48 overflow-auto rounded-xl border border-border/80 bg-surface py-1 shadow-[var(--shadow-premium-lg)]"
+          className="absolute left-0 right-0 top-[calc(100%-0.25rem)] z-30 max-h-52 overflow-auto rounded-xl border border-border/80 bg-surface py-1 shadow-[var(--shadow-premium-lg)]"
           role="listbox"
         >
           {results.map((city) => (
@@ -95,7 +87,7 @@ export function CityAutocomplete({
                 onClick={() => pick(city)}
                 className="flex w-full cursor-pointer flex-col px-4 py-2.5 text-left transition-colors hover:bg-subtle"
               >
-                <span className="text-sm font-medium text-navy">{cityLabel(city, locale)}</span>
+                <span className="text-sm font-semibold text-navy">{cityLabel(city, locale)}</span>
                 <span className="text-xs text-muted-foreground">
                   {locale === "ru" ? city.countryRu : city.countryEn}
                 </span>

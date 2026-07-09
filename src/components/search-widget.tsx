@@ -3,15 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "motion/react";
-import {
-  Bus,
-  Hotel,
-  Plane,
-  TrainFront,
-  ArrowLeftRight,
-  Users,
-  Search,
-} from "lucide-react";
+import { Bus, Hotel, Plane, TrainFront, ArrowLeftRight, Users, Search } from "lucide-react";
 import { useRouter } from "@/i18n/navigation";
 import {
   CityAutocomplete,
@@ -95,6 +87,12 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
     requestAnimationFrame(() => movePill(index, true));
   };
 
+  const swapCities = () => {
+    setFrom(to);
+    setTo(from);
+    setErrors((e) => ({ ...e, from: undefined, to: undefined }));
+  };
+
   const validate = (): boolean => {
     const next: FormErrors = {};
     if (isHotel) {
@@ -120,11 +118,7 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
 
   const handleSubmit = () => {
     if (!validate()) return;
-    const params = new URLSearchParams({
-      type: activeTab,
-      depart,
-      passengers,
-    });
+    const params = new URLSearchParams({ type: activeTab, depart, passengers });
     if (isHotel) {
       params.set("city", city);
     } else {
@@ -141,17 +135,17 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
   return (
     <motion.div
       id="search"
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={cn("glass-panel w-full rounded-[1.75rem] p-2 sm:p-2.5", shake && "animate-[shake_0.4s_ease-in-out]")}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      className={cn("search-widget w-full", shake && "animate-[shake_0.4s_ease-in-out]")}
     >
       <div
-        className="t-tabs w-full overflow-x-auto rounded-2xl bg-subtle/80 p-1 scrollbar-none"
+        className="search-widget-tabs t-tabs w-full overflow-x-auto scrollbar-none"
         role="tablist"
         aria-label="Search type"
       >
-        <span ref={pillRef} className="t-tabs-pill" aria-hidden />
+        <span ref={pillRef} className="t-tabs-pill !rounded-[0.625rem] !shadow-sm" aria-hidden />
         {tabs.map(({ id, icon: Icon }, index) => (
           <button
             key={id}
@@ -162,41 +156,37 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
             role="tab"
             aria-selected={activeTab === id}
             onClick={() => handleTabChange(id, index)}
-            className="t-tab flex shrink-0 cursor-pointer items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-semibold sm:px-5 sm:py-3"
+            className="t-tab flex flex-1 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-[0.625rem] px-3 py-2.5 text-xs font-semibold sm:flex-none sm:gap-2 sm:px-4 sm:text-sm"
           >
-            <Icon className="h-4 w-4 shrink-0" aria-hidden strokeWidth={2} />
+            <Icon className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" aria-hidden strokeWidth={2} />
             <span className="whitespace-nowrap">{t(`tabs.${id}`)}</span>
           </button>
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.p
-          key={activeTab}
-          initial={{ opacity: 0, y: 4 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -4 }}
-          transition={{ duration: 0.25 }}
-          className="mt-2.5 px-1 text-xs text-muted-foreground sm:text-[13px]"
-        >
-          {t(`hints.${activeTab}`)}
-        </motion.p>
-      </AnimatePresence>
+      <div className="search-widget-body">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={activeTab}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="mb-3 px-0.5 text-xs leading-relaxed text-muted-foreground sm:text-[13px]"
+          >
+            {t(`hints.${activeTab}`)}
+          </motion.p>
+        </AnimatePresence>
 
-      <div className="mt-2 rounded-2xl bg-subtle/50 p-4 sm:p-5">
         {!isHotel && (
-          <div className="mb-4 inline-flex rounded-full bg-surface p-1 shadow-sm ring-1 ring-border/60">
+          <div className="trip-toggle" role="group" aria-label="Trip type">
             {(["round", "one"] as const).map((type) => (
               <button
                 key={type}
                 type="button"
+                data-active={tripType === type}
                 onClick={() => setTripType(type)}
-                className={cn(
-                  "cursor-pointer rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200",
-                  tripType === type
-                    ? "bg-navy text-white shadow-sm"
-                    : "text-muted-foreground hover:text-navy",
-                )}
+                className="trip-toggle-btn"
               >
                 {type === "round" ? t("roundTrip") : t("oneWay")}
               </button>
@@ -204,7 +194,13 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
           </div>
         )}
 
-        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl bg-border/60 sm:grid-cols-2 lg:grid-cols-4">
+        <div
+          className={cn(
+            "search-field-grid",
+            !isHotel && "search-field-grid--four-cols",
+            isHotel && "hotel-grid",
+          )}
+        >
           {isHotel ? (
             <>
               <CityAutocomplete
@@ -214,7 +210,7 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
                 onChange={setCity}
                 placeholder={t("toPlaceholder")}
                 error={errors.city}
-                className="sm:col-span-2 lg:col-span-2 rounded-none sm:rounded-tl-2xl lg:rounded-tl-2xl"
+                className="hotel-city"
               />
               <DateField
                 id="hotel-depart"
@@ -223,14 +219,8 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
                 min={today}
                 onChange={setDepart}
                 error={errors.depart}
-                className="rounded-none"
               />
-              <PassengersField
-                label={t("guests")}
-                value={passengers}
-                onChange={setPassengers}
-                className="rounded-none sm:rounded-br-2xl lg:rounded-tr-2xl lg:rounded-br-2xl"
-              />
+              <PassengersField label={t("guests")} value={passengers} onChange={setPassengers} />
             </>
           ) : (
             <>
@@ -241,67 +231,55 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
                 onChange={setFrom}
                 placeholder={t("fromPlaceholder")}
                 error={errors.from}
-                className="rounded-none sm:rounded-tl-2xl lg:rounded-none lg:rounded-tl-2xl"
               />
-              <CityAutocomplete
-                id="to"
-                label={t("to")}
-                value={to}
-                onChange={setTo}
-                placeholder={t("toPlaceholder")}
-                error={errors.to}
-                icon={<ArrowLeftRight className="h-4 w-4 text-muted-foreground/70" strokeWidth={1.75} />}
-                className="rounded-none"
-              />
-              <div className={cn("contents", tripType === "round" && "lg:contents")}>
-                <DateField
-                  id="depart"
-                  label={tripType === "round" ? t("departDate") : t("dates")}
-                  value={depart}
-                  min={today}
-                  onChange={setDepart}
-                  error={errors.depart}
-                  className="rounded-none"
+              <div className="relative">
+                <CityAutocomplete
+                  id="to"
+                  label={t("to")}
+                  value={to}
+                  onChange={setTo}
+                  placeholder={t("toPlaceholder")}
+                  error={errors.to}
                 />
-                {tripType === "round" ? (
-                  <DateField
-                    id="return"
-                    label={t("returnDate")}
-                    value={ret}
-                    min={depart || today}
-                    onChange={setRet}
-                    className="rounded-none sm:rounded-bl-2xl lg:rounded-none"
-                  />
-                ) : (
-                  <PassengersField
-                    label={t("passengers")}
-                    value={passengers}
-                    onChange={setPassengers}
-                    className="rounded-none sm:rounded-br-2xl lg:rounded-tr-2xl lg:rounded-br-2xl"
-                  />
-                )}
+                <button
+                  type="button"
+                  onClick={swapCities}
+                  className="swap-cities-btn"
+                  aria-label="Swap cities"
+                >
+                  <ArrowLeftRight className="h-3.5 w-3.5" strokeWidth={2} />
+                </button>
               </div>
-              {tripType === "round" && (
-                <PassengersField
-                  label={t("passengers")}
-                  value={passengers}
-                  onChange={setPassengers}
-                  className="rounded-none sm:col-span-2 sm:rounded-br-2xl lg:col-span-1 lg:rounded-none lg:rounded-br-2xl lg:rounded-tr-2xl"
+              <DateField
+                id="depart"
+                label={tripType === "round" ? t("departDate") : t("dates")}
+                value={depart}
+                min={today}
+                onChange={setDepart}
+                error={errors.depart}
+              />
+              {tripType === "round" ? (
+                <DateField
+                  id="return"
+                  label={t("returnDate")}
+                  value={ret}
+                  min={depart || today}
+                  onChange={setRet}
                 />
+              ) : (
+                <PassengersField label={t("passengers")} value={passengers} onChange={setPassengers} />
               )}
             </>
           )}
         </div>
 
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className={cn(
-            "mt-4 flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-accent py-4 text-sm font-semibold text-white",
-            "transition-all duration-250 hover:bg-[#dc4f0a] hover:shadow-[var(--shadow-glow-accent)]",
-            "active:scale-[0.995]",
-          )}
-        >
+        {!isHotel && tripType === "round" && (
+          <div className="round-trip-passengers mt-2.5 max-w-xs">
+            <PassengersField label={t("passengers")} value={passengers} onChange={setPassengers} />
+          </div>
+        )}
+
+        <button type="button" onClick={handleSubmit} className="search-widget-submit">
           <Search className="h-4 w-4" aria-hidden strokeWidth={2.25} />
           {t("search")}
         </button>
@@ -331,24 +309,19 @@ function DateField({
     <div className={className}>
       <label
         htmlFor={id}
-        className={cn(
-          "block cursor-pointer bg-surface px-4 py-3.5 transition-colors hover:bg-subtle/80",
-          error && "ring-1 ring-red-400 ring-inset",
-        )}
+        className={cn("search-field cursor-pointer rounded-2xl border border-border/70 sm:rounded-none sm:border-0", error && "ring-2 ring-red-400/60 ring-inset")}
       >
-        <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-          {label}
-        </span>
+        <span className="search-field-label">{label}</span>
         <input
           id={id}
           type="date"
           value={value}
           min={min}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full cursor-pointer bg-transparent text-[0.9375rem] font-medium text-navy outline-none [color-scheme:light]"
+          className="search-field-input cursor-pointer [color-scheme:light]"
         />
       </label>
-      {error && <p className="px-4 py-1 text-[11px] text-red-600">{error}</p>}
+      {error && <p className="mt-1 px-1 text-[11px] font-medium text-red-600">{error}</p>}
     </div>
   );
 }
@@ -365,29 +338,24 @@ function PassengersField({
   className?: string;
 }) {
   return (
-    <label
-      className={cn(
-        "block cursor-pointer bg-surface px-4 py-3.5 transition-colors hover:bg-subtle/80",
-        className,
-      )}
-    >
-      <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-        {label}
-      </span>
-      <span className="flex items-center gap-2">
-        <Users className="h-4 w-4 text-muted-foreground/70" strokeWidth={1.75} />
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full cursor-pointer bg-transparent text-[0.9375rem] font-medium text-navy outline-none"
-        >
-          {[1, 2, 3, 4, 5, 6].map((n) => (
-            <option key={n} value={String(n)}>
-              {n}
-            </option>
-          ))}
-        </select>
-      </span>
-    </label>
+    <div className={className}>
+      <label className="search-field cursor-pointer rounded-2xl border border-border/70 sm:rounded-none sm:border-0">
+        <span className="search-field-label">{label}</span>
+        <span className="flex items-center gap-2">
+          <Users className="h-4 w-4 shrink-0 text-muted-foreground/70" strokeWidth={1.75} />
+          <select
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="search-field-input cursor-pointer appearance-none"
+          >
+            {[1, 2, 3, 4, 5, 6].map((n) => (
+              <option key={n} value={String(n)}>
+                {n}
+              </option>
+            ))}
+          </select>
+        </span>
+      </label>
+    </div>
   );
 }
