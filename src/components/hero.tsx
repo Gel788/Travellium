@@ -22,64 +22,70 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-background">
-      <div className="relative z-0 h-[38vh] min-h-[200px] max-h-[340px] overflow-hidden sm:h-[40vh] sm:max-h-[380px] lg:absolute lg:inset-0 lg:h-auto lg:max-h-none">
-        <HeroBackground activeTab={activeTab} />
-      </div>
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-subtle to-transparent lg:h-80" aria-hidden />
 
-      <div className="relative z-10 pb-16 sm:pb-20 lg:mx-auto lg:max-w-7xl lg:px-10 lg:pb-24 lg:pt-16">
-        <div className="hero-content-sheet">
-          <div className="mx-auto max-w-3xl px-4 pt-7 sm:px-6 sm:pt-8 lg:max-w-none lg:px-0 lg:pt-0">
-            <div className="lg:max-w-2xl">
-              <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45 }}
-                className="eyebrow mb-4 sm:mb-5"
-              >
-                {t("eyebrow")}
-              </motion.p>
+      <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-8 sm:px-6 sm:pb-16 sm:pt-10 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start lg:gap-10 lg:px-10 lg:pb-20 lg:pt-12 xl:gap-14">
+        <div className="min-w-0">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="eyebrow mb-3 sm:mb-4"
+          >
+            {t("eyebrow")}
+          </motion.p>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: 0.05 }}
-                className="font-display text-[2rem] leading-[1.08] tracking-[-0.03em] text-navy sm:text-5xl lg:text-[3.75rem]"
-              >
-                {t("title")}
-              </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.04 }}
+            className="font-display max-w-xl text-[1.875rem] leading-[1.1] tracking-[-0.03em] text-navy sm:text-4xl lg:text-[2.75rem] xl:text-5xl"
+          >
+            {t("title")}
+          </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: 0.12 }}
-                className="mt-4 max-w-xl text-[0.9375rem] leading-relaxed text-muted-foreground sm:mt-5 sm:text-[1.05rem] sm:leading-[1.65]"
-              >
-                {t("subtitle")}
-              </motion.p>
-            </div>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mt-3 max-w-lg text-[0.9375rem] leading-relaxed text-muted-foreground sm:mt-4 sm:text-base"
+          >
+            {t("subtitle")}
+          </motion.p>
 
-            <div className="mt-7 w-full sm:mt-10">
-              <SearchWidget activeTab={activeTab} onTabChange={setActiveTab} />
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-7 flex flex-wrap gap-2 sm:mt-10"
-            >
-              {stats.map((stat) => (
-                <span
-                  key={stat}
-                  className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-subtle/80 px-3.5 py-1.5 text-xs font-medium text-muted-foreground"
-                >
-                  <span className="h-1 w-1 rounded-full bg-accent" aria-hidden />
-                  {stat}
-                </span>
-              ))}
-            </motion.div>
+          <div className="mt-6 sm:mt-8">
+            <SearchWidget activeTab={activeTab} onTabChange={setActiveTab} />
           </div>
+
+          <motion.ul
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.25 }}
+            className="mt-5 flex flex-wrap gap-x-4 gap-y-2 sm:mt-6 sm:gap-x-6"
+          >
+            {stats.map((stat) => (
+              <li key={stat} className="flex items-center gap-2 text-xs font-medium text-muted-foreground sm:text-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
+                {stat}
+              </li>
+            ))}
+          </motion.ul>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="relative mt-8 hidden min-h-[420px] overflow-hidden rounded-[1.5rem] border border-border/60 shadow-[var(--shadow-premium-lg)] lg:mt-2 lg:block xl:min-h-[480px]"
+        >
+          <HeroBackground activeTab={activeTab} className="absolute inset-0" />
+          <div className="absolute inset-x-0 bottom-0 p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/70">
+              {t("eyebrow")}
+            </p>
+            <p className="mt-1 font-display text-2xl text-white">{t("title")}</p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

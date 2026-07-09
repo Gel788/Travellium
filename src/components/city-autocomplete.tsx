@@ -13,6 +13,7 @@ type CityAutocompleteProps = {
   placeholder: string;
   error?: string;
   className?: string;
+  fullWidth?: boolean;
 };
 
 export function CityAutocomplete({
@@ -23,6 +24,7 @@ export function CityAutocomplete({
   placeholder,
   error,
   className,
+  fullWidth,
 }: CityAutocompleteProps) {
   const locale = useLocale();
   const [open, setOpen] = useState(false);
@@ -49,7 +51,7 @@ export function CityAutocomplete({
   };
 
   return (
-    <div ref={wrapRef} className={cn("search-bar-field relative min-w-0", className)}>
+    <div ref={wrapRef} className={cn("search-bar-field relative min-w-0", fullWidth && "search-bar-field--full", className)}>
       <label
         htmlFor={id}
         className={cn("search-field cursor-pointer", error && "search-field--error")}

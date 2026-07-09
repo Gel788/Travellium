@@ -11,56 +11,32 @@ export async function HowItWorks() {
   const t = await getTranslations("steps");
 
   return (
-    <PageSection
-      id="how-it-works"
-      className="border-y border-border/60 bg-surface py-16 sm:py-20 lg:py-24"
-    >
-      <div className="relative">
-        <div
-          className="pointer-events-none absolute -right-32 top-0 hidden h-64 w-64 rounded-full bg-accent/5 blur-3xl lg:block"
-          aria-hidden
-        />
+    <PageSection id="how-it-works" className="border-y border-border/60 bg-surface py-12 sm:py-16 lg:py-20">
+      <ScrollReveal>
+        <SectionHeader eyebrow={t("eyebrow")} title={t("title")} subtitle={t("subtitle")} />
+      </ScrollReveal>
 
-        <ScrollReveal>
-          <SectionHeader
-            eyebrow={t("eyebrow")}
-            title={t("title")}
-            subtitle={t("subtitle")}
-          />
-        </ScrollReveal>
-
-        <ol className="relative mt-12 grid gap-10 sm:mt-16 md:grid-cols-3 md:gap-6 lg:gap-8">
-          <div
-            className="absolute left-[16.666%] right-[16.666%] top-7 hidden h-px bg-gradient-to-r from-transparent via-border to-transparent md:block"
-            aria-hidden
-          />
-
-          {stepKeys.map((key, index) => {
-            const Icon = icons[index];
-            return (
-              <ScrollReveal key={key} delay={index * 0.08}>
-                <li className="relative text-center md:text-left">
-                  <span
-                    className="font-display pointer-events-none absolute -top-3 left-1/2 hidden -translate-x-1/2 select-none text-[4.5rem] leading-none text-subtle md:left-0 md:block md:translate-x-0 lg:text-[5rem]"
-                    aria-hidden
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="relative mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-navy text-white shadow-lg shadow-navy/20 md:mx-0">
-                    <Icon className="h-5 w-5" aria-hidden strokeWidth={1.75} />
-                  </span>
-                  <h3 className="relative text-base font-semibold tracking-[-0.01em] text-navy sm:text-lg">
-                    {t(`items.${key}.title`)}
-                  </h3>
-                  <p className="relative mx-auto mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground md:mx-0">
+      <ol className="mt-8 space-y-4 sm:mt-10 md:grid md:grid-cols-3 md:gap-5 md:space-y-0 lg:gap-6">
+        {stepKeys.map((key, index) => {
+          const Icon = icons[index];
+          return (
+            <ScrollReveal key={key} delay={index * 0.06}>
+              <li className="flex gap-4 rounded-2xl border border-border/70 bg-background p-5 md:flex-col md:gap-0 md:border-0 md:bg-transparent md:p-0">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-navy text-sm font-bold text-white md:mb-4 md:h-12 md:w-12 md:rounded-2xl">
+                  <Icon className="h-5 w-5 md:hidden" aria-hidden strokeWidth={1.75} />
+                  <span className="hidden md:inline">{index + 1}</span>
+                </span>
+                <div>
+                  <h3 className="text-base font-semibold text-navy">{t(`items.${key}.title`)}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
                     {t(`items.${key}.description`)}
                   </p>
-                </li>
-              </ScrollReveal>
-            );
-          })}
-        </ol>
-      </div>
+                </div>
+              </li>
+            </ScrollReveal>
+          );
+        })}
+      </ol>
     </PageSection>
   );
 }

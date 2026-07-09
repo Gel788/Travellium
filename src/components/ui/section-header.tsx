@@ -36,7 +36,7 @@ export function SectionHeader({
       </p>
       <h2
         className={cn(
-          "font-display mt-4 text-[2rem] font-normal leading-[1.12] tracking-[-0.025em] sm:text-[2.5rem]",
+          "font-display mt-3 text-[1.625rem] font-normal leading-[1.15] tracking-[-0.025em] sm:mt-4 sm:text-[2.125rem] lg:text-[2.375rem]",
           dark ? "text-white" : "text-navy",
         )}
       >

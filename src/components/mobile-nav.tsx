@@ -1,21 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
 
 export function MobileNav() {
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const links = [
-    { href: "/#search", label: t("flights"), onClick: () => setOpen(false) },
-    { href: "/#destinations", label: t("hotels"), onClick: () => setOpen(false) },
-    { href: "/#how-it-works", label: t("howItWorks"), onClick: () => setOpen(false) },
-    { href: "/about", label: t("about"), onClick: () => setOpen(false) },
-    { href: "/faq", label: t("faq"), onClick: () => setOpen(false) },
+    { href: "/#search", label: t("flights") },
+    { href: "/#destinations", label: t("hotels") },
+    { href: "/#how-it-works", label: t("howItWorks") },
+    { href: "/about", label: t("about") },
+    { href: "/faq", label: t("faq") },
   ];
 
   return (
@@ -23,7 +29,7 @@ export function MobileNav() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl text-navy transition-colors hover:bg-subtle"
+        className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-border/70 bg-surface text-navy transition-colors hover:bg-subtle"
         aria-expanded={open}
         aria-label={open ? "Close menu" : "Open menu"}
       >
@@ -31,50 +37,49 @@ export function MobileNav() {
       </button>
 
       {open && (
-        <>
+        <div className="fixed inset-0 z-[60]">
           <button
             type="button"
-            className="fixed inset-0 z-40 cursor-pointer bg-navy/20 backdrop-blur-sm"
+            className="absolute inset-0 cursor-pointer bg-navy/40 backdrop-blur-sm"
             aria-label="Close menu"
             onClick={() => setOpen(false)}
           />
           <nav
-            className="fixed right-3 top-[3.75rem] z-50 w-[min(calc(100vw-1.5rem),280px)] overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-[var(--shadow-premium-lg)]"
+            className="absolute inset-x-0 bottom-0 flex max-h-[85vh] flex-col rounded-t-[1.5rem] bg-surface px-4 pb-8 pt-3 shadow-[0_-16px_48px_rgba(15,23,42,0.12)]"
             aria-label="Mobile navigation"
           >
-            <ul className="p-2">
+            <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-border" aria-hidden />
+            <ul className="space-y-1 overflow-y-auto">
               {links.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    onClick={link.onClick}
-                    className="block cursor-pointer rounded-xl px-4 py-3 text-sm font-medium text-navy transition-colors hover:bg-subtle"
+                    onClick={() => setOpen(false)}
+                    className="flex min-h-12 cursor-pointer items-center rounded-xl px-4 text-base font-medium text-navy transition-colors active:bg-subtle"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="border-t border-border/80 p-2">
+            <div className="mt-4 grid grid-cols-2 gap-2 border-t border-border/80 pt-4">
               <Link
                 href="/login"
                 onClick={() => setOpen(false)}
-                className="block cursor-pointer rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-subtle"
+                className="flex min-h-12 cursor-pointer items-center justify-center rounded-xl border border-border/80 text-sm font-semibold text-navy"
               >
                 {t("login")}
               </Link>
               <Link
                 href="/register"
                 onClick={() => setOpen(false)}
-                className={cn(
-                  "mt-1 block cursor-pointer rounded-xl bg-navy px-4 py-3 text-center text-sm font-semibold text-white",
-                )}
+                className="flex min-h-12 cursor-pointer items-center justify-center rounded-xl bg-navy text-sm font-semibold text-white"
               >
                 {t("signUp")}
               </Link>
             </div>
           </nav>
-        </>
+        </div>
       )}
     </div>
   );

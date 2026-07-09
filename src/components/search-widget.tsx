@@ -207,6 +207,7 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
                   onChange={setCity}
                   placeholder={t("toPlaceholder")}
                   error={errors.city}
+                  fullWidth
                 />
                 <DateField
                   id="hotel-depart"
@@ -263,7 +264,7 @@ export function SearchWidget({ activeTab, onTabChange }: SearchWidgetProps) {
                     onChange={setRet}
                   />
                 )}
-                <PassengersField label={t("passengers")} value={passengers} onChange={setPassengers} />
+                <PassengersField label={t("passengers")} value={passengers} onChange={setPassengers} fullWidth={tripType === "round"} />
               </>
             )}
           </div>
@@ -285,6 +286,7 @@ function DateField({
   min,
   onChange,
   error,
+  fullWidth,
 }: {
   id: string;
   label: string;
@@ -292,9 +294,10 @@ function DateField({
   min: string;
   onChange: (v: string) => void;
   error?: string;
+  fullWidth?: boolean;
 }) {
   return (
-    <div className="search-bar-field">
+    <div className={cn("search-bar-field", fullWidth && "search-bar-field--full")}>
       <label htmlFor={id} className={cn("search-field", error && "search-field--error")}>
         <span className="search-field-label">{label}</span>
         <input
@@ -315,13 +318,15 @@ function PassengersField({
   label,
   value,
   onChange,
+  fullWidth,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
+  fullWidth?: boolean;
 }) {
   return (
-    <div className="search-bar-field">
+    <div className={cn("search-bar-field", fullWidth && "search-bar-field--full")}>
       <label className="search-field">
         <span className="search-field-label">{label}</span>
         <span className="flex items-center gap-2">
